@@ -9,15 +9,49 @@ import {
   TextField
 } from '@material-ui/core';
 
+import { apiUpdateMyPassword } from 'src/api/index';
+import { store } from 'react-notifications-component';
+
 const SettingsPassword = (props) => {
-  const [values, setValues] = useState({
-    password: '',
-    confirm: ''
+  const [password, setPassword] = useState({
+    oldPassword: '',
+    newPassword: '',
+    newPasswordConfirm: ''
   });
+  const [errorMsg, setErrorMsg] = useState({
+    oldPassword: '',
+    newPassword: ''
+  });
+  const updatePassword = async () => {
+    try {
+      const { newPassword, newPasswordConfirm, oldPassword } = password;
+      if (!oldPassword) { setErrorMsg({ ...errorMsg, oldPassword: '必填' }); return; }
+      if (!newPassword || !newPassword) { setErrorMsg({ ...errorMsg, newPassword: '必填' }); return; }
+      if (newPassword !== newPasswordConfirm) { setErrorMsg({ ...errorMsg, newPassword: '新密碼不一致，請重新確認' }); return; }
+      setErrorMsg({ oldPassword: '', newPassword: '' });
+      await apiUpdateMyPassword(password);
+      store.addNotification({
+        title: '密碼更改成功!',
+        message: 'Success',
+        type: 'success',
+        insert: 'bottom',
+        container: 'bottom-center',
+        dismiss: {
+          duration: 1000,
+          onScreen: false
+        }
+      });
+    } catch (error) {
+      setErrorMsg({ ...errorMsg, oldPassword: '舊的密碼不符合，請再試一次' });
+    }
+  };
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
+    const { oldPassword, newPassword, newPasswordConfirm } = password;
+    if (oldPassword !== '') setErrorMsg({ ...errorMsg, oldPassword: '' });
+    if (newPassword !== '' && newPasswordConfirm !== '') setErrorMsg({ ...errorMsg, newPassword: '' });
+    setPassword({
+      ...password,
       [event.target.name]: event.target.value
     });
   };
@@ -33,22 +67,37 @@ const SettingsPassword = (props) => {
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
+            label="Old Password"
             margin="normal"
-            name="password"
+            name="oldPassword"
+            onChange={handleChange}
+            error={errorMsg.oldPassword}
+            helperText={errorMsg.oldPassword && errorMsg.oldPassword}
+            type="password"
+            value={password.oldPassword}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="New Password"
+            margin="normal"
+            name="newPassword"
             onChange={handleChange}
             type="password"
-            value={values.password}
+            error={errorMsg.newPassword && errorMsg.newPassword}
+            value={password.newPassword}
             variant="outlined"
           />
           <TextField
             fullWidth
             label="Confirm password"
             margin="normal"
-            name="confirm"
+            error={errorMsg.newPassword && errorMsg.newPassword}
+            helperText={errorMsg.newPassword && errorMsg.newPassword}
+            name="newPasswordConfirm"
             onChange={handleChange}
             type="password"
-            value={values.confirm}
+            value={password.newPasswordConfirm}
             variant="outlined"
           />
         </CardContent>
@@ -61,6 +110,7 @@ const SettingsPassword = (props) => {
           }}
         >
           <Button
+            onClick={() => updatePassword()}
             color="primary"
             variant="contained"
           >

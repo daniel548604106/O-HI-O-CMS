@@ -13,9 +13,28 @@ import {
 } from '@material-ui/core';
 import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
+import { apiPostLogin } from 'src/api/index';
+import Cookie from 'js-cookie';
 
 const Login = () => {
   const navigate = useNavigate();
+  const submitFormData = (errors, values) => {
+    // Won't submit form if error is shown
+    if (errors.email || errors.password) return;
+    const postLogin = async () => {
+      try {
+        const { data } = await apiPostLogin(values);
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('admin', JSON.stringify(data.user));
+        Cookie.set('token', data.token);
+        console.log(data);
+        navigate('/app/dashboard');
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    postLogin();
+  };
 
   return (
     <>
@@ -50,7 +69,6 @@ const Login = () => {
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
               touched,
               values
             }) => (
@@ -149,7 +167,7 @@ const Login = () => {
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
+                    onClick={() => submitFormData(errors, values)}
                     fullWidth
                     size="large"
                     type="submit"

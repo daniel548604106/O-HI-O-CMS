@@ -4,20 +4,35 @@ import { Box, Container } from '@material-ui/core';
 import ListResults from 'src/components/global/ListResults';
 import ListToolbar from 'src/components/global/ListToolbar';
 import { apiGetUsers } from 'src/api/index';
+import { useSearchParams } from 'react-router-dom';
 
 const CustomerList = () => {
   const [users, setUsers] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [
+    searchParams,
+    setSearchParams,
+  ] = useSearchParams();
+
+  const handleGetUsers = async () => {
+    try {
+      const { data } = await apiGetUsers(searchKeyword);
+      setUsers(data.users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // 關鍵字搜尋
   useEffect(() => {
-    const handleGetUsers = async () => {
-      try {
-        const { data } = await apiGetUsers();
-        setUsers(data.users);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (searchKeyword) {
+      setSearchParams(`search=${searchKeyword}`);
+    }
+    console.log(searchParams);
+  }, [searchKeyword]);
+
+  useEffect(() => {
     handleGetUsers();
-  }, []);
+  }, [searchKeyword]);
   return (
     <>
       <Helmet>
@@ -31,7 +46,7 @@ const CustomerList = () => {
         }}
       >
         <Container maxWidth={false}>
-          <ListToolbar title="user" />
+          <ListToolbar title="user" searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
           <Box sx={{ pt: 3 }}>
             <ListResults customers={users} />
           </Box>
