@@ -1,30 +1,20 @@
-import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Products from "./pages/Products/Index.js";
-import Product from "./pages/Products/Product.js";
-import ProductEdit from "./pages/Products/Edit.js";
-import React, { useRef } from "react";
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import { useRoutes } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core';
+import GlobalStyles from 'src/components/GlobalStyles';
+import 'src/mixins/chartjs';
+import theme from 'src/theme';
+import routes from 'src/routes';
 
-export default function App() {
-  const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
+const App = () => {
+  const routing = useRoutes(routes);
+
   return (
-    <>
-      <Router>
-        <Route path={`/products`} exact>
-          <Products />
-        </Route>
-        <Route path={`/products/:id`} exact>
-          <Product />
-        </Route>
-        <Route path={`/products/:id/edit`} exact>
-          <ProductEdit />
-        </Route>
-      </Router>
-    </>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      {routing}
+    </ThemeProvider>
   );
-}
+};
+
+export default App;
