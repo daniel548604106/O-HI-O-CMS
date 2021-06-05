@@ -23,10 +23,12 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 
+const adminInfo = JSON.parse(localStorage.getItem('admin'));
+
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: adminInfo.picture,
   jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  name: adminInfo.name
 };
 
 const items = [

@@ -12,6 +12,7 @@ const authRoute = require("./routes/authRoute");
 const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
 const shopRoute = require("./routes/shopRoute");
+const accountRoute = require("./routes/accountRoute");
 
 const connectDB = require("./utils/db");
 
@@ -42,8 +43,10 @@ app.use("/*", bodyParser.json());
 app.use(cors());
 
 app.use("/v1/products", productRoute);
+app.use('/v1/account',accountRoute)
 app.use("/v1/users", userRoute);
 app.use("/v1/shops", shopRoute);
+app.use("/v1/login", authRoute);
 
 if (process.env.NODE_ENV === "production") {
   // if the application is running on heroku, we then execute the following function
