@@ -12,7 +12,6 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
   Lock as LockIcon,
   Settings as SettingsIcon,
@@ -37,9 +36,9 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/app/customers',
+    href: '/app/users',
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'Users'
   },
   {
     href: '/app/products',
@@ -71,11 +70,7 @@ const items = [
     icon: UserPlusIcon,
     title: 'Register'
   },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
+
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {

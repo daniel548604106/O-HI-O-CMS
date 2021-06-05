@@ -10,6 +10,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRoute = require("./routes/authRoute");
 const productRoute = require("./routes/productRoute");
+const userRoute = require("./routes/userRoute");
+const shopRoute = require("./routes/shopRoute");
 
 const connectDB = require("./utils/db");
 
@@ -40,6 +42,8 @@ app.use("/*", bodyParser.json());
 app.use(cors());
 
 app.use("/v1/products", productRoute);
+app.use("/v1/users", userRoute);
+app.use("/v1/shops", shopRoute);
 
 if (process.env.NODE_ENV === "production") {
   // if the application is running on heroku, we then execute the following function
