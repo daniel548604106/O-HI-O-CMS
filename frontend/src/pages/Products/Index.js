@@ -10,7 +10,7 @@ import { apiGetAllProducts } from 'src/api/index';
 
 const Index = () => {
   const [products, setProducts] = useState([]);
-  const [totalPage, setTotalPage] = useState(1);
+  const [totalpage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   useEffect(() => {
@@ -53,7 +53,7 @@ const Index = () => {
               pt: 3
             }}
           >
-            <Pagination page={currentPage} totalPage={totalPage} color="primary" count={totalPage} size="small" />
+            <Pagination page={currentPage} totalpage={totalpage} color="primary" count={totalpage} size="small" />
           </Box>
         </Container>
       </Box>
