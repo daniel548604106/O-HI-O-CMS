@@ -6,22 +6,26 @@ import 'src/mixins/chartjs';
 import theme from 'src/theme';
 import routes from 'src/routes';
 import ReactNotification from 'react-notifications-component';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './redux/store';
 
 const App = () => {
-  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
-  const routing = useRoutes(routes(isLoggedIn));
-
+  const isAdminLoggedIn = useSelector(() => useSelector((state) => state.global.isAdminLoggedIn));
+  const routing = useRoutes(routes(isAdminLoggedIn));
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <ReactNotification />
-        <GlobalStyles />
-        {routing}
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <ReactNotification />
+      <GlobalStyles />
+      { routing }
+    </ThemeProvider>
   );
 };
 
-export default App;
+// The AppWrapper is used to allow access to redux-state
+const AppWrapper = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+export default AppWrapper;

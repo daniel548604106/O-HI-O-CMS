@@ -17,11 +17,11 @@ import Banners from 'src/pages/banners/Index';
 import BannerEdit from 'src/pages/banners/Edit';
 import BannerCreate from 'src/pages/banners/Create';
 // This nested array of Javascript objects keeps the code DRY and improves the readability of the code.
-const routes = (isLoggedIn) => [
+const routes = (isAdminLoggedIn) => [
   {
     path: 'app',
     // Protected Routes
-    element: isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
+    element: isAdminLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'account', element: <Account /> },
       {
@@ -76,7 +76,7 @@ const routes = (isLoggedIn) => [
   {
     path: '/',
     // Unprotected Routes
-    element: !isLoggedIn ? <MainLayout /> : <Navigate to="/app/dashboard" />,
+    element: !isAdminLoggedIn ? <MainLayout /> : <Navigate to="/app/dashboard" />,
     children: [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
