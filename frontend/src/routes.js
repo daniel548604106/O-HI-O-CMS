@@ -13,7 +13,9 @@ import Register from 'src/pages/Register';
 import Shops from 'src/pages/shops/Index';
 import Shop from 'src/pages/shops/Shop';
 import Settings from 'src/pages/Settings';
-
+import Banners from 'src/pages/banners/Index';
+import BannerEdit from 'src/pages/banners/Edit';
+import BannerCreate from 'src/pages/banners/Create';
 // This nested array of Javascript objects keeps the code DRY and improves the readability of the code.
 const routes = (isLoggedIn) => [
   {
@@ -39,6 +41,23 @@ const routes = (isLoggedIn) => [
           },
           {
             path: ':id', element: <Shop />
+          }
+        ]
+      },
+      {
+        path: 'banners',
+        children: [
+          {
+            path: '/',
+            element: <Banners />
+          },
+          {
+            path: '/create',
+            element: <BannerCreate />
+          },
+          {
+            path: ':id/edit',
+            element: <BannerEdit />
           }
         ]
       },

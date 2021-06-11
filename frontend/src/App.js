@@ -6,19 +6,21 @@ import 'src/mixins/chartjs';
 import theme from 'src/theme';
 import routes from 'src/routes';
 import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
-import 'animate.css';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const App = () => {
   const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const routing = useRoutes(routes(isLoggedIn));
 
   return (
-    <ThemeProvider theme={theme}>
-      <ReactNotification />
-      <GlobalStyles />
-      {routing}
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <ReactNotification />
+        <GlobalStyles />
+        {routing}
+      </ThemeProvider>
+    </Provider>
   );
 };
 
