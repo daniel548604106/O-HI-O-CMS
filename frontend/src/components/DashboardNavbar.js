@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   AppBar,
@@ -12,11 +12,20 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { logOut } from 'src/redux/slices/globalSlice';
+import { useDispatch } from 'react-redux';
 import Logo from './Logo';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
+  const navigate = useNavigate();
   const [notifications] = useState([]);
-
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch(logOut());
+    // navigate to login
+    navigate('/login');
+  };
   return (
     <AppBar
       elevation={0}
@@ -37,7 +46,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton onClick={() => handleLogout()} color="inherit">
             <InputIcon />
           </IconButton>
         </Hidden>

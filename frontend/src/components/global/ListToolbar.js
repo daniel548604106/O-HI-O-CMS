@@ -8,12 +8,14 @@ import {
   SvgIcon
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
-import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const ProductListToolbar = (props) => {
-  const navigate = useNavigate();
+const ListToolbar = ({ title, searchKeyword, setSearchKeyword }) => {
+  const handleSearch = (e) => {
+    setSearchKeyword(e.target.value);
+  };
   return (
-    <Box {...props}>
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -27,11 +29,13 @@ const ProductListToolbar = (props) => {
           Export
         </Button>
         <Button
-          onClick={() => navigate('/app/products/create')}
           color="primary"
           variant="contained"
         >
-          Add product
+          Add
+          {' '}
+          {title}
+
         </Button>
       </Box>
       <Box sx={{ mt: 3 }}>
@@ -40,6 +44,8 @@ const ProductListToolbar = (props) => {
             <Box sx={{ maxWidth: 500 }}>
               <TextField
                 fullWidth
+                onChange={(e) => handleSearch(e)}
+                value={searchKeyword}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -52,7 +58,7 @@ const ProductListToolbar = (props) => {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Search product"
+                placeholder={`Search ${title}`}
                 variant="outlined"
               />
             </Box>
@@ -63,4 +69,9 @@ const ProductListToolbar = (props) => {
   );
 };
 
-export default ProductListToolbar;
+ListToolbar.propTypes = {
+  title: PropTypes.string.isRequired,
+  setSearchKeyword: PropTypes.func,
+  searchKeyword: PropTypes.string
+};
+export default ListToolbar;

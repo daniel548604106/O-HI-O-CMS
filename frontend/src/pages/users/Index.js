@@ -1,29 +1,60 @@
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import CustomerListResults from 'src/components/customer/CustomerListResults';
-import CustomerListToolbar from 'src/components/customer/CustomerListToolbar';
-import customers from 'src/__mocks__/customers';
+import ListResults from 'src/components/global/ListResults';
+import ListToolbar from 'src/components/global/ListToolbar';
+import { apiGetUsers } from 'src/api/index';
+import { useSearchParams } from 'react-router-dom';
 
-const CustomerList = () => (
-  <>
-    <Helmet>
-      <title>Customers | Material Kit</title>
-    </Helmet>
-    <Box
-      sx={{
-        backgroundColor: 'background.default',
-        minHeight: '100%',
-        py: 3
-      }}
-    >
-      <Container maxWidth={false}>
-        <CustomerListToolbar />
-        <Box sx={{ pt: 3 }}>
-          <CustomerListResults customers={customers} />
-        </Box>
-      </Container>
-    </Box>
-  </>
-);
+const CustomerList = () => {
+  const [users, setUsers] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [
+    searchParams,
+    setSearchParams,
+  ] = useSearchParams();
+
+  const handleGetUsers = async () => {
+    try {
+      const { data } = await apiGetUsers(searchKeyword);
+      setUsers(data.users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // 關鍵字搜尋
+  useEffect(() => {
+    if (searchKeyword) {
+      setSearchParams(`search=${searchKeyword}`);
+    }
+    console.log(searchParams);
+  }, [searchKeyword]);
+
+  useEffect(() => {
+    handleGetUsers();
+  }, [searchKeyword]);
+  return (
+    <>
+      <Helmet>
+        <title>Users | O.HI.O</title>
+      </Helmet>
+      <Box
+        sx={{
+          backgroundColor: 'background.default',
+          minHeight: '100%',
+          py: 3
+        }}
+      >
+        <Container maxWidth={false}>
+          <ListToolbar title="user" searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
+          <Box sx={{ pt: 3 }}>
+            <ListResults customers={users} />
+          </Box>
+        </Container>
+      </Box>
+    </>
+
+  );
+};
 
 export default CustomerList;
