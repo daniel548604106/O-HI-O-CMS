@@ -23,12 +23,10 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 
-const adminInfo = JSON.parse(localStorage.getItem('admin'));
-
 const user = {
-  avatar: adminInfo.picture,
+  avatar: '',
   jobTitle: 'Senior Developer',
-  name: adminInfo.name
+  name: 'Daniel'
 };
 
 const items = [
@@ -107,7 +105,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src={user.avatar}
+          src={user.avatar || 'https://images.unsplash.com/photo-1623343039444-6d5db73cfdd8?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'}
           sx={{
             cursor: 'pointer',
             width: 64,
