@@ -12,13 +12,17 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { logOut } from 'src/redux/slices/globalSlice';
+import { useDispatch } from 'react-redux';
 import Logo from './Logo';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const navigate = useNavigate();
   const [notifications] = useState([]);
-  const logout = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
     localStorage.clear();
+    dispatch(logOut());
     // navigate to login
     navigate('/login');
   };
@@ -42,7 +46,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton onClick={() => logout()} color="inherit">
+          <IconButton onClick={() => handleLogout()} color="inherit">
             <InputIcon />
           </IconButton>
         </Hidden>

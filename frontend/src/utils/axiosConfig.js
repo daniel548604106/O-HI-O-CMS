@@ -8,7 +8,7 @@ const request = axios.create({
     Authorization: `Bearer ${token}`
   },
   baseURL:
-    process.env.NODE_ENV === 'development' ? 'http://localhost:3001/v1' : ''
+    process.env.NODE_ENV === 'development' ? 'http://localhost:3001/v1/api' : ''
 });
 
 export default request;

@@ -6,6 +6,7 @@ import { getShops, getShop } from './shopRequest';
 
 import { postLogin, postRegister } from './authRequest';
 import { updateMyPassword, updateMyData } from './accountRequest';
+import { getBanners, getBanner, patchBanner } from './bannerRequest';
 // Users
 
 export const apiGetUsers = getUsers;
@@ -28,3 +29,8 @@ export const apiPostRegister = postRegister;
 // Account
 export const apiUpdateMyData = updateMyData;
 export const apiUpdateMyPassword = updateMyPassword;
+
+// Banners
+export const apiPatchBanner = patchBanner;
+export const apiGetBanners = getBanners;
+export const apiGetBanner = getBanner;

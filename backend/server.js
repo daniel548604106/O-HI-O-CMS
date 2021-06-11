@@ -13,11 +13,11 @@ const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
 const shopRoute = require("./routes/shopRoute");
 const accountRoute = require("./routes/accountRoute");
-
+const bannerRoute = require('./routes/bannerRoute')
 const connectDB = require("./utils/db");
-
+const dotenv = require('dotenv')
 // Basic requirements and setup
-require("dotenv").config();
+dotenv.config();
 connectDB();
 
 // server-side
@@ -39,14 +39,19 @@ connectDB();
 // });
 
 // Route
-app.use("/*", bodyParser.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.use(cors());
 
-app.use("/v1/products", productRoute);
-app.use('/v1/account',accountRoute)
-app.use("/v1/users", userRoute);
-app.use("/v1/shops", shopRoute);
-app.use("/v1/login", authRoute);
+app.use("/v1/api/products", productRoute);
+app.use('/v1/api/account',accountRoute)
+app.use("/v1/api/users", userRoute);
+app.use("/v1/api/shops", shopRoute);
+app.use("/v1/api/login", authRoute);
+app.use('/v1/api/banners',bannerRoute)
+
+
+
 
 if (process.env.NODE_ENV === "production") {
   // if the application is running on heroku, we then execute the following function
