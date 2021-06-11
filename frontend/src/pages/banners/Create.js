@@ -32,12 +32,11 @@ const Create = () => {
             <form>
               <label htmlFor="upload">
                 {
-                  banner.image
-                    ? (
-                      <CardMedia src={banner.image} component="img" style={{ cursor: 'pointer' }} />
-                    ) : (
-                      <AddIcon />
-                    )
+                  banner.image ? (
+                    <CardMedia src={banner.image} component="img" style={{ cursor: 'pointer' }} />
+                  ) : (
+                    <AddIcon />
+                  )
                 }
                 <input onChange={(e) => addImageToPost(e)} id="upload" type="file" style={{ display: 'none' }} />
               </label>

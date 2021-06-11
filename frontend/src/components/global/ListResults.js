@@ -74,8 +74,7 @@ const CustomerListResults = ({ customers, ...rest }) => {
                     checked={selectedCustomerIds.length === customers.length}
                     color="primary"
                     indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
+                      selectedCustomerIds.length > 0 && selectedCustomerIds.length < customers.length
                     }
                     onChange={handleSelectAll}
                   />
