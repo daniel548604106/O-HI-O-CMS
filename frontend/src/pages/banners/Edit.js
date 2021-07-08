@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button, Box, TextField, Card, CardMedia, CardContent, CardActions, Typography
+  Button,
+  Box,
+  TextField,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography
 } from '@material-ui/core';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft as ChevronLeftIcon, Upload as UploadIcon } from 'react-feather';
+import {
+  ChevronLeft as ChevronLeftIcon,
+  Upload as UploadIcon
+} from 'react-feather';
 import { apiGetBanner, apiPatchBanner } from 'src/api/index';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,16 +22,20 @@ const useStyles = makeStyles(() => ({
     position: 'relative',
     '&:hover': {
       '& $uploadIcon': {
-        display: 'block',
+        display: 'block'
       },
       '& $image': {
-        opacity: 0.8,
+        opacity: 0.8
       },
       '& $overlay': {
         display: 'block',
         cursor: 'pointer'
       }
-    },
+    }
+  },
+  layout: {
+    maxWidth: '1200px',
+    margin: 'auto'
   },
   uploadIcon: {
     display: 'none',
@@ -93,16 +107,33 @@ const Edit = () => {
     getBanner();
   }, []);
   return (
-    <Box p={3}>
-      <Button startIcon={<ChevronLeftIcon />} size="small" onClick={() => navigate(-1)}>Back</Button>
+    <Box p={3} className={classes.layout}>
+      <Button
+        startIcon={<ChevronLeftIcon />}
+        size="small"
+        onClick={() => navigate(-1)}
+      >
+        Back
+      </Button>
       <Box py={3}>
         <Card>
           <CardActions className={classes.root}>
             <form>
               <label htmlFor="upload">
-                <CardMedia className={classes.image} src={banner.image} component="img" style={{ cursor: 'pointer' }} />
+                <CardMedia
+                  className={classes.image}
+                  src={banner.image}
+                  component="img"
+                  style={{ cursor: 'pointer' }}
+                />
                 <div className={classes.overlay} />
-                <input onChange={(e) => addImageToPost(e)} type="file" accept="image/*" id="upload" style={{ display: 'none' }} />
+                <input
+                  onChange={(e) => addImageToPost(e)}
+                  type="file"
+                  accept="image/*"
+                  id="upload"
+                  style={{ display: 'none' }}
+                />
               </label>
               <Box className={classes.uploadIcon}>
                 <UploadIcon />
@@ -113,18 +144,36 @@ const Edit = () => {
           <CardContent>
             <form>
               <Box p={1}>
-                <TextField fullWidth label="Title" value={banner.title || ''} onChange={(e) => setBanner({ ...banner, title: e.target.value })} />
+                <TextField
+                  fullWidth
+                  label="Title"
+                  value={banner.title || ''}
+                  onChange={(e) => setBanner({ ...banner, title: e.target.value })}
+                />
               </Box>
               <Box p={1}>
-                <TextField fullWidth label="Link" value={banner.link || ''} onChange={(e) => setBanner({ ...banner, link: e.target.value })} />
+                <TextField
+                  fullWidth
+                  label="Link"
+                  value={banner.link || ''}
+                  onChange={(e) => setBanner({ ...banner, link: e.target.value })}
+                />
               </Box>
             </form>
           </CardContent>
         </Card>
       </Box>
       <Box display="flex" justifyContent="flex-end">
-        <Button style={{ marginRight: '10px' }} variant="outlined" align="right">取消</Button>
-        <Button variant="contained" align="right" onClick={() => saveEdit()}>Save</Button>
+        <Button
+          style={{ marginRight: '10px' }}
+          variant="outlined"
+          align="right"
+        >
+          取消
+        </Button>
+        <Button variant="contained" align="right" onClick={() => saveEdit()}>
+          Save
+        </Button>
       </Box>
     </Box>
   );

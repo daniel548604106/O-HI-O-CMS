@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Box,
   Button,
@@ -9,6 +8,7 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const states = [
   {
@@ -25,45 +25,22 @@ const states = [
   }
 ];
 
-const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
-
+const AccountProfileDetails = ({ accountInfo, setAccountInfo }) => {
   const handleChange = (event) => {
-    setValues({
-      ...values,
+    setAccountInfo({
+      ...accountInfo,
       [event.target.name]: event.target.value
     });
   };
 
   return (
-    <form
-      autoComplete="off"
-      noValidate
-      {...props}
-    >
+    <form autoComplete="off" noValidate>
       <Card>
-        <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
-        />
+        <CardHeader subheader="The information can be edited" title="Profile" />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 helperText="Please specify the first name"
@@ -71,75 +48,55 @@ const AccountProfileDetails = (props) => {
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={accountInfo.firstName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Last name"
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={accountInfo.lastName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Email Address"
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={accountInfo.email}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Phone Number"
                 name="phone"
                 onChange={handleChange}
                 type="number"
-                value={values.phone}
+                value={accountInfo.phone}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Country"
                 name="country"
                 onChange={handleChange}
                 required
-                value={values.country}
+                value={accountInfo.country}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Select State"
@@ -147,15 +104,11 @@ const AccountProfileDetails = (props) => {
                 onChange={handleChange}
                 required
                 select
-                SelectProps={{ native: true }}
-                value={values.state}
+                value={accountInfo.state}
                 variant="outlined"
               >
                 {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
+                  <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
@@ -171,16 +124,18 @@ const AccountProfileDetails = (props) => {
             p: 2
           }}
         >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+          <Button color="primary" variant="contained">
             Save details
           </Button>
         </Box>
       </Card>
     </form>
   );
+};
+
+AccountProfileDetails.propTypes = {
+  accountInfo: PropTypes.object,
+  setAccountInfo: PropTypes.func
 };
 
 export default AccountProfileDetails;
